@@ -1,0 +1,740 @@
+Mastering Flux and Redux
+
+#3
+check Diag 
+
+
+component1.js react.js
+component2.js redux.js        --->JSX+(ES6 TO ES5)--->   (main.js/index.html/style.css)--->       BROWSER /OUTPUT
+component3.js                      WEBPACK+BABEL   
+
+webpack +babel is a traspile tool that takes es6 code and transpile to ES5 (i.e browser readable code)
+(this all transpile to single js file like main.js/app.js)
+
+
+#4)
+To run the project we use node package manager..
+npm install 
+
+npm start
+
+#6)
+React is a Js Library that is used to producer html that is shown to users
+When we write React code, We are writing individual Component or view component.
+that produces HTML.
+*)It makes really complex application to simple.
+
+//const is ES6 variable.(this is a final variable, we are not resigning again any value).
+//The HTML stuff inside   return <div>Hi</div>; is called JSX.
+
+//JSX  is a subset or dialect of JS that allows us to write
+what looks like HTML inside our JS ,but really its A JS
+
+webpack+babel will transpile this JSX+ES6 to BROWSER readable(i.e vanilla js )
+
+#7)
+The purpose of JSX is to have some JS code that can produce utlimate HTML.
+JSX will transpile to vanilla javascript.
+
+we dont have to write if we dont want to write JSX code
+http://babeljs.io/repl/#?babili=false&browsers=&build=&builtIns=false&code_lz=MYewdgzgLgBAggBwQXgGYFczCgS3ACgEoBvAKBhgCcBTKdSsGAHgBMcA3APgAkcmB6NlwDcpAL6kgA&debug=false&circleciRepo=&evaluate=false&lineWrap=true&presets=es2015%2Creact%2Cstage-2&targets=&version=6.26.0
+
+
+To be eligible of complex code  we use JSX.
+(above link where we can write vanilla js code which is huge code)but jsx makes its simple.
+
+#8
+By writing the code in ES6, we have 
+access to concept called javascript module.
+js modules encapsulates the idea of all the code we write is separated,
+unless we explicitly say, we cannto access the files in other modules
+so we use 
+import React from 'react';  //react code library
+to access to react library
+now we can access the library react which installed in node_modules.
+
+
+
+
+#9
+http://babeljs.io/repl/
+
+
+//when we get below error,.i. e 
+//we pass the App as  the class to ReactDOM.render but not as instance.
+//Uncaught Error: ReactDOM.render(): Invalid component element.
+// Instead of passing a component class,
+// make sure to instantiate it by passing it to React.createElement.
+
+//To make instance <App></App> is used.
+
+
+
+//JSX
+const App=function(){
+  return <div>Hi</div>;
+}
+
+//vanilla JS
+below code is  a component class that transpiled
+
+"use strict";
+var App = function App() {
+  return React.createElement(
+    "div",
+    null,
+    "Hi"
+  );
+};//only class is called
+
+
+JSX
+const App=function(){
+  return <div>Hi</div>;
+}
+<App/>
+
+vanilla javascript
+"use strict";
+var App = function App() {
+  return React.createElement(
+    "div",
+    null,
+    "Hi"
+  );
+};
+React.createElement(App, null);//App instance is created.
+
+we need to render instance rather than class.
+
+
+#11
+error:
+Uncaught Error: _registerComponent(...): Target container is not a DOM element.
+Here below ReactDOM takes a second arugment i.e DOM Node
+ReactDOM.render(<App />);
+(where to render?)
+this second arugment  is reference to existing DOm node on page.
+ReactDOM.render(<App />,document.querySelector('.container'));
+root node is `container` in index.html where we can render
+
+
+ES6 code  for App function.
+const App=()=>{
+    render(){
+        return <div>Hi</div>;
+    }
+}
+
+
+
+#12
+Rule no:1
+*****)
+We always make one component for file
+
+
+#13
+package.json contains all the dependance of our application.
+--save saves the package to our application in package.json..
+
+#14
+
+const SearchBar=(){
+
+}
+//export default SearchBar;
+const foo=5;
+export default foo;
+whatever export default componentname is present onlythose
+component are imported in other files
+import SearchBar from 'search_bar';
+
+then will get foo5 in import.
+
+
+#17
+what is a state?
+state is a plain javascript object that is used to record
+and react user events.Each Class Based Component has its own
+State object, whenever a component state changes the component is also
+re-rendered.and also  re-renders the child components;
+//before we use state object we need to intialiaize
+state object in constructor.
+constructor(props){
+  super(props);
+  this.state={
+    term:'';
+  }
+}
+
+note:functional based component does not have state object.
+
+
+What is Redux?
+Redux is a appplication state that maintain and can be used in appplication.
+
+Reducers?
+A reducer is a function that returns a peice of an appplication state.
+(we can have many peice, hence many reducers)
+
+#40
+Container?
+A Container is a react component that has a direct connection
+to a state managed by redux.
+contaners sometimes called smart component or dumb component
+dump component->if it does not have any direct connection to redux.
+
+
+(watch diag)
+redux library(state) ->react-redux library(bridge) ->reactlibrary(view).
+
+To form connection between react and redux we use
+import {connect} from 'react-redux';
+so that it will become a smart component
+
+connect is a function 
+
+function mapStateToProps(state){//holds appplication state as an argument
+    //whatever returned here will showups as a props inside the component
+    return {//usually we return an object here.
+
+    }
+}
+
+
+export default connect(mapStateToProps)(Booklist);
+
+connect takes a function(mapStateToProps) and a component(Booklist)
+and then produces a container
+
+*)Whenever our appplication state changes our component
+will re-render
+
+#43)
+const rootReducer=combineReducer({
+    book:BookReducer//will form a key to reducer.
+})
+
+
+#44)
+
+
+Action Creator//it is a function that returns an object
+function(
+    return {
+        type:BOOK_SELCTED,
+        payload:request
+    }
+)
+above action creator return object(an action).contains type and data
+{
+    type:BOOK_SELCTED,
+    payload:request
+}
+
+/action automaitclly send to all reducers
+//reducers
+//then availabel in our appplication as a state.
+
+#45)
+
+function mapStateToProps(state){
+    return bindActionCreators({selectBook:selectBook},dispatch)
+}
+bindActionCreators will take the action creator and call the action creator
+Whenever action creator is called it will make sure that result flow 
+through the dispatch function.
+dispath will acts like funnel where it will take all the actions 
+and then passs the result to the reducers inside the appplication.
+#47
+Reducers
+state argument is not appplication state, onlty the state this reducer is 
+//responsible for.
+export default function(state=[],action)
+{
+
+}
+
+
+https://github.com/StephenGrider/ReduxCasts
+
+
+
+
+
+
+for api's http://reduxblog.herokuapp.com/
+https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
+install npm install --save react-router-dom@4.0.0
+
+
+#120
+
+Traditonal way back in 2010,85,90 is 
+request: user clicks link browser(user) ->request->server
+response:server>sends ->new html->browser(user)
+
+*)With react-router we are no longer making requests to our
+server to get a web page and showing that page to the user.
+Instead react router intercepts changes to url
+Look diagram in#120
+
+flow
+
+->user clicks url 
+->history library receives new url, it does some
+parsing over it and figures out what changed about the url
+and then pass it React-Router Library.
+->React-Router will receive that new router
+and its going to decide which component that need to show based on that url.
+
+//we have to set our configuration inside the React-Router so 
+based on the route we have to show required component manually.
+
+
+-->react take component and re-render to show ouput.
+the above idea is called SPA(Single Page Application)
+the idea behind is avoiding above Traditonal thing
+and we are relying js to show what output to be shown.
+
+
+
+*)BrowserRouter object interacts with the history library and
+decides exactly what to do based on the change inside the URL.
+
+*)Route is an react component.(this is actualy react-routing one)
+Route component can be render inside of any other react component
+that we put inside of our applications.
+
+purpose:configure the component(i.e show the component)
+based on the url recived from history library.
+
+
+summary:Essential, we use that route component to just show
+or hide the component depending on URL.
+
+
+#124
+array
+[
+
+    {id:1,content:'Hi'}
+    {id:2,content:'Hello'}
+
+]
+convert to object
+{
+
+    1:{id:1,content:'Hi'}
+    2:{id:2,content:'Hello'}
+}
+
+
+#125
+whenever we need a network request inside of the action creator,
+we have to install axios and redux-promise to handle asynchronous 
+operation of the request itself.
+redux-promise is a middleware inside our applications.
+
+#126
+DEFAULT the state to object in reducers.
+
+_.mapKeys() from lodash
+
+_.mapKeys(myarray,key);
+
+_.mapKeys(myarray,'id');//id from myarray;
+
+#127
+componentDidMount(){
+
+}
+calls the api before component render.we can call things one time
+and also before render.here is the place where we can call our ajax calls
+(thought this calls after render, react is completely asynchronous)
+
+
+*)we can also connect to redux 
+export default connect(null,{fetchPosts}) (PostsIndex);
+instead of writing mapStateTodispatch function.mostly we use mapStateTodispatch
+when we really required some computations.
+
+#128
+important point:
+whenever we we want to consume anything from application level state 
+we always define our mapStateToProps function.
+
+*)application level state and component level state are different
+
+*)lodash can be used to map Objects(loop Objects)
+ return _.map(array,function to return some jsx code);
+
+<HashRouter> components. 
+The <BrowserRouter>
+should be used when you have a server that will handle dynamic requests
+(knows how to respond to any possible URI), while the
+<HashRouter> should be used for static websites
+(can only respond to requests for files that it knows about).
+Usually it is preferable to use a 
+<BrowserRouter>, 
+but if your website will be hosted on a server that only serves static files,
+then <HashRouter> is a good solution.
+
+History
+Each router creates a history object,
+which it uses to keep track of the current location[1] 
+and re-render the website whenever that changes. 
+The other components provided by React Router 
+rely on having that history object available through the context,
+so they must be rendered inside of the router.
+A React Router component that does not have a router as one of its 
+
+The route for the homepage includes an exact prop. 
+This is used to state that that route should only match when the
+pathname matches the route’s path exactly.
+
+
+LooseMatch happens when use '/' and '/posts'
+since / can be seen /posts, it will display both 
+components (bug)
+
+
+Switch Component takes in a collection of different route’s
+<Switch>
+<Route path="/" component={PostsIndex}/>
+<Route path="/posts/new" component={PostsNew}/>
+</Switch>//wrong
+http://localhost:8080/posts/new it will always goes to http://localhost:8080/(infinit loop kinda)
+
+
+
+we need to put our most specific routes at the top of the list i.e
+<Switch>
+<Route path="/posts/new" component={PostsNew}/>
+<Route path="/" component={PostsIndex}/>
+</Switch>//right
+it will match with / and then remaining and show exact component we need.
+
+
+https://stackoverflow.com/questions/43584748/react-router-switch-component-matches
+
+
+
+#131
+Traditonally we use
+<a href="#">
+In react-router we use <Link> component that is defined in react router.
+<Link className="btn btn-primary" to="/posts/new">
+Add A Post
+</Link>
+
+'to' is string that gives the url.
+
+what is the difference between <a href> tag and <Link>
+
+<Link> tag prevents couple of event handlers in the browser
+from doing what is normally does which is to navigate
+or to issue another http request to fetch another html page.
+eventhought <Link> tag looks like <a href> tag when inspect the element.
+so we <Link> instead of <a> tag.
+
+
+#132
+Internally our redux form uses our redux instance of redux store
+for handling all the states that is being produced by the form
+thats getting rendered.
+
+import {reducer as formReducer} from 'redux-form';
+redux form recommended to to give alais as formReducer
+
+import {reducer as formReducer} from 'redux-form';
+
+const rootReducer = combineReducers({
+  posts:PostsReducer,
+  form:formReducer//keyword form use to wire inside the combineReducers
+});
+
+export default rootReducer;
+
+
+#133diagram
+setting up Redux form
+*)identify different pieces of form state.
+i.e input fields in the form like title, description...
+
+*)Each different piece of form state, we are creating
+a <Field> Component created by the redux form
+(we just need to tell what type of input field we need in Field Component)
+
+*)User change a field input i.e check the checkbox and type some text
+
+*)Redux form automatically handles changes for us.
+(i.e no need to call setState() manually by us and set state for input change.
+redux do this for us).//no need action creatro also
+
+*)user clicks submit form button
+
+
+
+*)pass two call backs to redux form that validate the different input
+and then submit the form to the server.
+
+*)
+import {Field,reduxForm} from 'redux-form';
+
+reduxForm is a function.
+identical to connect we to connect for react redux.
+
+reduxForm directly talks to redux store
+
+reduxForm communicate with formReducer 
+i.e
+const rootReducer = combineReducers({
+  posts:PostsReducer,
+  form:formReducer//keyword form use to wire inside the combineReducers
+});
+
+
+#134diagram
+Field->component->JSX blob
+By default, Field component only know how to interact with 
+redux form(event handler/actionCreators)
+but does not know how to show or what show on the screen
+
+*)component we have to define the component property
+(we need lot of control on component)
+
+
+<Field 
+name="title"
+component={this.renderTitleField}//no parenthesis here we just refered the function
+// becasue field will cal that sometime near in future.we are not calling our selves.
+/>
+
+
+<input {...field.input} />   
+
+...field.input contains all eventhandlres like onBlur....
+
+
+
+#136
+
+validate function automatically calls for us at certain time
+of `form` lifecycle.
+i.e
+or whenever user clicks submit button, the validate function will be called automatically
+
+function validate(values){//values is an object that contains all the values user gave as input.
+  
+}
+export default reduxForm(
+    {//function
+       validate,
+       form:'PostsNewForm'
+    }
+)(PostsNew);
+
+
+#137
+{field.meta.error}
+
+meta.error is automatically added to field object by validate function.
+
+
+#138
+export default reduxForm(
+    {//function
+       validate,
+       form:'PostsNewForm'
+    }
+)(PostsNew);
+
+we wired up reduxForm to PostsNew component.
+when we wired up reduxForm helper it adds ton of 
+additional properties to our component PostsNew.
+
+//reduxform is responsible for handling state and validation of our form
+but its not responsible for handling like taking this data and saving
+it in some fasion.
+
+
+handleSubmit will vallidate the form, if everything is fine
+then it call the function that we defined i.e this.onSubmit.bind(this);
+is called.
+<form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+</form>
+onSubmit(values){
+console.log(values);
+}
+
+
+#139
+form and field state.
+
+three different state of our form
+pristine ->no input is touched yet and the user has not yet selected it.
+touched  ->user has selected or focussed an input and then focussed out of the input.
+invalid ->error message
+
+
+
+#143
+Programatically navigate after api is successfull
+//programatic navigation
+
+react-router passes a big set of propertiess into our component that is being re-rendered
+by our route.
+
+
+
+
+
+
+#144
+<Route path="post/:id" component={showComponent}/>
+Here id is wild card entry.(accessed as proprety in the component)
+
+If we order the Route in incorrect order thenn we might get the
+incorrect component.
+
+
+Correct
+<Route path="/posts/new" component={PostsNew}/>
+<Route path="post/:id" component={showComponent}/>
+<Route path="/" component={PostsIndex}/>
+
+Incorrect
+<Route path="post/:id" component={showComponent}/>
+<Route path="/posts/new" component={PostsNew}/>
+<Route path="/" component={PostsIndex}/>
+ since if we /posts/new then `new` will be taken as a wildcard entry
+ and will get the incorrect component.
+
+146
+*) this.props.match.params.id
+match is a top level property
+params contains list of all different wilcard entries that exist inside the url.
+
+function mapStateToprops({posts},ownProps){
+
+}   
+first argument is state
+and second argument is ownProps.
+whenever Component is re-rendered to self component
+has ownProps.
+
+
+#147)
+ render(){
+        const {post}=this.props;
+        return(<div>
+           <h3>{post.title}</h3>
+           <h6>Categories:{post.categories}</h6>
+           <p>{post.content}</p>
+         </div>);
+    }
+component render before even attempt to call ajax
+and we have {post.title}, then we will get undefined title erro message
+(after ajax call success and the object in state
+then it will be fine)
+so we write below code so that on first render i.e before ajax call
+we can avoid the undefined error
+
+if(!post){
+    return <div>Loading</div>;
+}
+
+
+
+
+Go with ReactJS life cycles.
+
+51)we are going to call ajax request only using redux.
+reactjs is just for showing the output.
+git clone https://github.com/StephenGrider/ReduxSimpleStarter.git weather
+
+*)container has the ability to talk with redux whereas normal component not.
+so we are defining searchbox as container
+
+53)A controlled field is a form element where the value of the input is set by the
+state of our component
+In controller component ,if we dont update in this.setState(),
+the value of the input never actually shows
+*)whenever we write event handler for onchange,onKeypress events
+we need to bind it `this` in the constructor
+i.e this.onInputChange=this.onInputChange.bind(this);
+here this.onInputChange wil bind to the component(SearchBar)(this)
+and will replace to this.onInputChange
+
+
+56)Middleware between actions and reducers acts like as gatekeeper
+The actions  can be manipulated/prevents/modifiesd and then
+send to the reducers
+*)Middleware can modifiy the actions
+Middleware are just function where actions pass throught them
+before  hitting the reducers
+
+install redux promise
+redux promise help us to handle  ajax request inside our applications
+npm install --save redux-promise
+After installing we need to hook the redux-promise into our Middleware
+
+import ReduxPromise from 'redux-promise';
+const createStoreWithMiddleware = applyMiddleware(
+  ReduxPromise//hooked here into our application
+)(createStore);
+
+57)Ajax request with Axios
+
+*)We only change our application state through reduces and applications
+*)Action creator makes an ajax request.
+
+
+*)Action creators always have to return an action.
+and action is an object that is always have a type.
+*)BACKSTICK (`) can be used to concatenate the string and variable(ES6 model)
+i.e 
+var api='12345';
+var url='http://www.google.com?api='+api;
+using  BACKSTICK (`) es6, we get below
+var url=`http://www.google.com?api=${api}`;
+
+
+
+*)usually to make request we used to do like
+  $.get(){url}....in jquery,
+  we just need a ajax request(no need tons of functionalites present in jquery)
+  so we use Axios.
+  Axios is a library solely made for making ajax request from browser.(it works almost
+  identical to the jquery).
+
+   var request=axios.get(url);//returns a Promise.
+   i.e request is a Promise object.
+
+   A Promise object represents the eventual completion(failures) of an asynchronous 
+   operation and its resulting values.
+
+Promise does not contain any of our data basically.
+
+
+*)Payload is an optional property that goes along with actions
+that contains some additional data that describes action.
+
+
+
+
+58)
+i)connect seach bar container to redux using connect method from the react-redux libr
+ii)bind actioncreator as a property to search bar component.
+
+bindActionCreator with dispatch will make sure to flow the data through
+the Middleware to the reducers
+
+
+59)Reducers are always functions
+first argument is always state
+and second is action.
+ii)add to combine reducer where r
+http://www.tutorialsteacher.com/nodejs/nodejs-eventemitter
