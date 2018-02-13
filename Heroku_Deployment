@@ -194,3 +194,21 @@ remote:        https://obscure-everglades-11300.herokuapp.com/ deployed to Herok
 https://obscure-everglades-11300.herokuapp.com/
 
 
+
+
+
+11)Check config in heroku //MongoDB Config
+
+sysadmin@AcubeL020:/var/www/html/HomeApp$ heroku config
+=== peaceful-oasis-86848 Config Vars
+
+2)Config mongoDB from mlab provided information.
+
+sysadmin@AcubeL020:/var/www/html/HomeApp$ heroku config:set MONGODB_URI='mongodb://sample:sample@ds129706.mlab.com:29706/sample';
+Setting MONGODB_URI and restarting ⬢ peaceful-oasis-86848... done, v6
+MONGODB_URI: mongodb://sample:sample@ds129706.mlab.com:29706/sample
+
+3)Check DB Config
+sysadmin@AcubeL020:/var/www/html/HomeApp$ heroku config=== peaceful-oasis-86848 Config Vars
+MONGODB_URI: mongodb://sample:sample@ds129706.mlab.com:29706/sample
+
