@@ -1,0 +1,1120 @@
+Array Helpers
+1)The purpose of every single array helpers is to help with  iteration over an array.
+*)array helpers are tecchnical part of es5 as well and es6
+
+forEach
+1)when we call forEach method, we pass in an anonymous function which is
+the internal argument here to the forEach call
+2)this function get called one time for every elements in the array and whatever is inside the function
+
+var colors=['red','blue','white'];
+for(var i=0;i<=colors.length;i++){
+	console.log(colors[i]);
+}
+
+colors.forEach(function(color){
+	console.log(color);
+});
+
+we call Anonymous as an iterator function.
+var numbers=[1,2,3,4,5];
+var sum=0;
+numbers.forEach(function(number){
+    sum=number+sum;
+});
+console.log(sum);
+15
+
+
+
+var sum1=0;
+
+//step2
+function adder(num){
+  sum1=sum1+num;
+}
+//numbers.forEach(adder);
+console.log(sum1);
+15
+
+
+
+
+
+
+
+
+Map helper
+
+var numbers=[1,2,3,4];
+
+var doubledNum=[];
+for(var i=0;i<numbers.lenght;i++){
+  doubledNum.push(numbers[i]*2);
+}
+doubledNum;
+
+
+var doubled=numbers.map(function(number){
+   return number*2;
+ });
+doubled;
+
+
+map returns a new array by using return keyword.
+*)return keyword is important else  it thinks you are returning an undefined value.
+
+we are not mutating the original array instead creates an new array.
+*)map is used whenever we want to modify the records	in somelist of data.
+
+
+
+example2:
+var books=[
+  { book:'c',price:'cheap'},
+  {   book:'java',price:'expensive'}
+   
+  ];
+ 
+var prices=books.map(function(book){
+   return book.price    
+})
+prices;
+
+book.price   (.)->the operator we called is know as pluck 
+
+
+
+filter
+check diag from stpehn ,its nice.
+1)iterator function has to return true/false
+it true it will return into the result array.
+var num=[1,2,3,4,5];
+num.filter(function(n){
+  return n>4;
+});
+
+var products=[
+  {name:'cucumber',type:'vegetables'},
+  {name:'orange',type:'fruits'},
+  {name:'banana',type:'fruits'},
+  {name:'celeray',type:'vegetables'},
+];
+
+var fruits=products.filter(function(product){
+   return product.type==='fruits'//boolean true/false it returns
+});
+fruits;
+
+
+//extra steps, no need to write like below better above function.
+var fruits1=products.filter(function(product){
+  if(product.type==='fruits'){
+    return true;
+  }
+});
+fruits1;
+
+output
+[5]
+[{"name":"orange","type":"fruits"},{"name":"banana","type":"fruits"}]
+[{"name":"orange","type":"fruits"},{"name":"banana","type":"fruits"}]
+
+
+
+
+example:2
+
+var products=[
+  {name:'cucumber',type:'vegetables',price:10,quantity:8},
+  {name:'orange',type:'fruits',price:5,quantity:20},
+  {name:'banana',type:'fruits',price:8,quantity:8},
+  {name:'celeray',type:'vegetables',price:10,quantity:8},
+];
+
+var fruits=products.filter(function(product){
+   return product.type==='fruits'
+          && product.price <=10 && product.quantity<=10
+});
+fruits;
+
+
+output
+[{"name":"banana","type":"fruits","price":8,"quantity":8}]
+
+
+
+
+
+
+example:3
+var post={id:4,title:'New post'};
+var comments=[
+  {postId:4,content:'Awesome post'},
+  {postId:3,content:'its ok'},
+  {postId:4,content:'neat'}
+];
+
+
+function commentsForPost(post,comments){
+  return comments.filter(function(comment){
+      return post.id==comment.postId
+  });
+}
+commentsForPost(post,comments);
+
+output:
+[{"postId":4,"content":"Awesome post"},{"postId":4,"content":"neat"}]
+
+
+example 4:
+
+Filter the array of numbers using the filter helper, creating a new array that only contains numbers greater than 50.  Assign this new array to a variable called 'filteredNumbers'.  Don't forget to use the 'return' keyword in the function!
+
+var numbers = [15, 25, 35, 45, 55, 65, 75, 85, 95];
+
+var filteredNumbers=[];
+filteredNumbers=numbers.filter(function(number){
+    return number >50; 
+});
+filteredNumbers;
+
+
+
+example 5:
+Filter the array of users, only returning users who have admin level access.  Assign the result to the variable 'filteredUsers'. Don't forget to use the 'return' keyword in the function!
+
+
+
+var users = [
+ { id: 1, admin: true },  
+ { id: 2, admin: false },
+ { id: 3, admin: false },
+ { id: 4, admin: false },
+ { id: 5, admin: true },
+];
+
+var filteredUsers=[];
+
+filteredUsers=users.filter(function(user){
+    return user.admin===true
+})
+filteredUsers;
+
+
+
+
+
+find helper:
+
+var users=[{id:1,name:'James'},
+           {id:2,name:'Alex'},
+           {id:3,name:'Matt'},
+           {id:2,name:'Alex'}
+];
+users.find(function(user){
+  return user.name=='Alex';//return true/false;//returns the first match
+});
+
+
+
+
+example2:
+function Car(model){
+  this.model=model;
+}
+var cars=[
+  new Car('Buick'),
+  new Car('Focus'),
+  new Car('Camoro')
+];
+	
+cars.find(function(car){
+  return car.model=='Focus'
+});	
+
+
+
+exmaple 3
+var posts=[
+           {id:1,title:'New post'},
+           {id:2,title:'Old Post'}
+         ];
+
+var comment={postId:1,content:'Great Post'};
+
+function postComment(posts,comment){
+ 
+   return posts.find(function(post){
+        return post.id===comment.postId;
+   });
+ 
+}
+postComment(posts,comment);
+
+
+example:
+Find the user in the users's array who is an admin.  Assign this user to the variable 'admin'.
+var users = [
+  { id: 1, admin: false },
+  { id: 2, admin: false },
+  { id: 3, admin: true }
+];
+
+var admin=[];
+
+admin=users.find(function(user){
+   return user.admin===true; 
+});
+admin;
+
+
+
+example:
+Find the account with a balance of 12 and assign it to the variable 'account'.
+var accounts = [
+  { balance: -10 },
+  { balance: 12 },
+  { balance: 0 }
+];
+
+var account=[];
+account=accounts.find(function(acc){
+    return acc.balance===12;
+})
+
+account;
+
+
+every and some
+check diag 16 vides
+var computers=[
+  {name:'Apple',ram:24},
+  {name:'Compaq',ram:4},
+  {name:'Acer',ram:32}  
+];
+
+computers.every(function(computer){
+  return computer.ram > 16
+});
+
+computers.some(function(computer){
+   return computer.ram > 16;
+});
+
+
+example:2
+var names=["alex","kate","jennifer"];
+names.every(function(name){
+   return name.length >4;
+});
+
+names.some(function(name){
+   return name.length >4;
+});
+
+
+
+
+
+example 3:
+
+function Field(value){
+  this.value=value;
+}
+var username=new Field('2cool');
+var password=new Field('my_password');
+var dob=new Field('10/10/2018');
+
+Field.prototype.validate=function(){
+   return this.value.length >4;
+};
+
+//username.validate() && password.validate() && dob.validate();
+
+
+var fields=[username,password,dob];
+fields.every(function(field){
+   return field.validate()
+});
+
+
+
+
+
+
+
+
+Reduce
+var numbers=[1,2,3,4];
+var sum=0;
+numbers.reduce(function(sum,number){
+   return sum+number;
+},0)
+output:10
+
+
+
+In reduce, we are condensing down in an array to a single value;
+
+
+var numbers=[1,2,3,4];
+var sum=0;
+numbers.reduce(function(sum,number){
+   return sum+number;
+},-30)
+
+ooutput:
+-20
+
+
+example2:
+
+
+var primaryColors=[{color:'red'},{color:'blue'},{color:'green'}];
+
+primaryColors.reduce(function(previous,primarycolor){
+   previous.push(primarycolor.color);
+   return previous;
+},[]);
+
+console.log(primaryColors);
+
+output:
+["red","blue","green"]
+[{"color":"red"},{"color":"blue"},{"color":"green"}]
+
+
+
+
+
+
+
+example3:
+function balancedParenthesis(string){
+  var str=string.split('');
+  console.log(str);
+  return !str.reduce(function(previous,char){
+       if(char==='(') return ++previous;
+       if(char===')') return --previous;
+  },0);
+}
+
+balancedParenthesis('(()))');
+
+output
+False
+
+Array(5)0: "("1: "("2: ")"3: ")"4: ")"length: 5__proto__: Array(0)
+21:46:40.455 
+
+
+
+
+
+example4://analysismore
+function balancedParenthesis(string){
+  var str=string.split('');
+  console.log(str);
+  return !str.reduce(function(previous,char){
+    if(previous<0) return previous;
+       if(char==='(') return ++previous;
+       if(char===')') return --previous;
+  },0);
+}
+
+balancedParenthesis('(())');
+
+output:
+True
+
+
+
+example5:
+var trips = [{ distance: 34 }, { distance: 12 } , { distance: 1 }];
+
+var totalDistance=0;
+totalDistance=trips.reduce(function(sum,trip){
+     return sum+trip.distance;
+},0);
+
+output:47;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+variable declaration with const and let.
+
+ES6
+const
+const is a keyword that is used to declare variable where we expect the value to that we are assigning to it will never change.
+let is a keyword that is used to declare variable where we expect the value to that we are assigning to it will change over a time.
+
+
+
+why const and let invented?
+const->let us know these values wil never change to the programmer
+let->will change over time
+
+i.e to identify why these variable are used for or for what? to know to the programmer.
+//var name='Jame';
+//var age=27;
+//var title='software';
+
+
+const name='Jame';
+//name='kate';//typeerror:Assignment to contant value
+let age=27;
+
+//sometimes later
+age=30;
+
+
+
+example 2:
+function count(targetString){
+  
+  const characters=['a','e','i','o','u'];//will never change
+  let number=0;//will change over a period
+  for(var i=0;i<=targetString.length;i++){
+     if(characters.includes(targetString[i])){
+        number++;  
+      }
+  }
+ return number;
+}
+
+count('aefjfiokfjfou');
+
+output:6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Template string
+A template  string is a nice way joining variable and string together.
+
+function message(){
+  const year=new Date().getFullYear();
+   return `this year is ${year}`
+  //return 'this year is '+year;
+}
+message();
+output:
+this year is 2018
+
+
+*)wherever we need to inject a js kind of expression we can use backticks and ${}
+
+exm 2:
+const year=new Date().getFullYear();
+  //return `${year}`;
+  return year;//no need template string when its only value;
+
+
+
+
+  exm3:
+
+  function doubleMessage(number) {
+  return "Your number doubled is " + (2 * number);
+}
+Refactor the above function to use template string
+
+function doubleMessage(number) {
+  return `Your number doubled is ${(2 * number)}`;
+}
+doubleMessage(2);
+
+exm4:
+function fullName(firstName, lastName) {
+  return firstName + lastName;
+}
+Refactor the above function to use template strings
+function fullName(firstName, lastName) {
+  return `${firstName} ${lastName}`;
+}
+
+
+
+
+
+
+FAT Arrow function.
+
+ES5
+const add=function(a,b){
+  return a+b;
+}
+
+add(10,20);
+
+
+ES6
+const add=(a,b)=>{
+  return a+b;
+}
+
+add(10,20);
+*)=> called as a FAT ARROW
+*)->called as a skiny arrow.
+
+
+whenever we have a single js expression then we can use below syntax
+i.e no curly braces or return keyword;
+
+const add=(a,b)=>a+b;
+add(10,20);
+implicit return will called whenever we use above
+i.e automatically return is added above.
+
+
+*)If we ad {}curly braces then we have to return manually.
+*)If we have really a long expression in a single expressioni.e if lot of logically going on
+then go with curly braces better.
+
+
+
+
+EX:2
+const double=(num)=>num*2;
+double(4);
+
+
+ex:3
+const double=(num=>num*2);
+double(4);
+
+
+*)If we have single argument then we can use like below,instead of ()
+const double=num=>num*2;
+double(4);
+
+
+If we ignore () for more than one argument or  for 0 argument then it will get an error.
+
+const double=num,num2=>num*num2;//error//2 arguments
+double(4,2); 
+
+
+const double= =>num*2;//error  o argument
+double();
+
+
+
+Ex:4
+
+const doubleNum=[1,2,3,4];
+doubleNum.map(function(num){
+  return num*2;
+});
+
+can be shortened using fat arrow function as below
+
+const doubleNum=[1,2,3,4];
+doubleNum.map(num=>num*2);
+
+
+below code is an error.
+const doubleNum=[1,2,3,4];
+doubleNum.map(num=>num*2;) semicolon inside cause an error.
+
+
+
+
+example: 5
+
+const team={
+ members:['Jane','kate'],
+ teamName:'Super Squad',
+ teamSummary:function(){
+    return this.members.map(function(member){
+         return `${member} is on the team:${this.teamName}`;//here this is undefined
+       });  
+    }
+}
+team.teamSummary();
+
+the above code results
+TypeError: Cannot read property 'teamName' of undefined //error
+
+To solve above we use bind(this) or using jquery kind of thing i.e self;
+
+const team={
+ members:['Jane','kate'],
+ teamName:'Super Squad',
+ teamSummary:function(){
+     //var self=this;
+    return this.members.map(function(member){
+       //return `${member} is on the team:${self.teamName}`;//jquery
+
+         return `${member} is on the team:${this.teamName}`;
+       }.bind(this));  
+    }
+}
+team.teamSummary();
+output:
+["Jane is on the team:Super Squad","kate is on the team:Super Squad"]
+
+
+or
+We can also solve the above problem using FAT Arrow function
+(Fat arrow function make use of a lexical this)
+
+const team={
+ members:['Jane','kate'],
+ teamName:'Super Squad',
+ teamSummary:function(){
+    //this===team//automatically sets whenever we are using fat arrow function and referring to `this`.like below
+    return this.members.map((member)=>{
+         return `${member} is on the team:${this.teamName}`;//only in anonymous function
+       });  
+    }
+}
+team.teamSummary();
+output:
+["Jane is on the team:Super Squad","kate is on the team:Super Squad"]
+
+
+Typically if we’re writing ES5, we’ll use something like Function.prototype.bind to grab the `this` value
+ from another scope to change a function’s execution context.
+  This will mainly be used in callbacks inside a different scope.
+
+Ecmascript 6 introduces a new way to write anonymous functions called arrow functions (sometimes called “Fat Arrow” functions).
+ These are concise and allow for functions to retain lexical scope after they are executed
+
+
+While in ES5 ‘this’ referred to the parent of the function, in ES6, arrow functions use lexical scoping — ‘this’ refers to it’s current surrounding scope and no further. Thus the inner function knew to bind to the inner function only, and not to the object’s method or the object itself.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enhanced Object literals;
+
+function createBookShop(inventory){
+  
+  
+  return {
+          inventory:inventory,
+          inventoryValue:function(){
+            //return this.inventory.reduce((total,book)=>return total+book.price,0);//error since return keyword
+             return this.inventory.reduce((total,book)=> total+book.price,0);
+
+          },
+          priceForTitle:function(title){
+            
+            return this.inventory.find((book)=> book.title===title).price;
+          }         
+      };
+}
+
+const inventory=[
+
+  {title:'Harry Potter',price:15},
+  {title:'The Flash',price:25}
+];
+
+const bookShop=createBookShop(inventory);
+bookShop.inventoryValue();
+bookShop.priceForTitle('The Flash');
+
+output:
+40
+25
+
+
+The above code we will enhance the object literals as below
+1)whenever we make reference to a key and value with the exact same name then we can condensy say inventory(below)
+2)omit : and keyword function for function
+
+function createBookShop(inventory){
+  
+  
+  return {
+          inventory,
+          inventoryValue(){
+            //return this.inventory.reduce((total,book)=>return total+book.price,0);//error since return keyword
+             return this.inventory.reduce((total,book)=> total+book.price,0);
+
+          },
+          priceForTitle(title){
+            return this.inventory.find((book)=> book.title===title).price;
+          }         
+      };
+}
+
+const inventory=[
+
+  {title:'Harry Potter',price:15},
+  {title:'The Flash',price:25}
+];
+
+const bookShop=createBookShop(inventory);
+bookShop.inventoryValue();
+bookShop.priceForTitle('The Flash');
+
+
+
+
+example2:
+
+function saveFile(url,data){
+  $.ajax({
+     url:url,
+     data:data,
+     method:'post'
+  });
+}
+const url='http://saveulr.com/';
+data={color:'red'};
+saveFile(url,data);
+
+
+shortened to as beloe
+
+
+function saveFile(url,data){
+  $.ajax({
+     url,
+     data,
+     method:'post'
+  });
+}
+const url='http://saveulr.com/';
+data={color:'red'};
+saveFile(url,data);
+
+
+example3:
+const canvasDimensions = function(width, initialHeight) {
+  const height = initialHeight * 9 /16;
+  return { 
+    width, 
+    height 
+  };
+}
+
+
+
+
+
+
+
+
+
+*)Default function arguments
+function makeAjaxRequest(url,method){
+   if(!method){
+     method='GET';
+   }
+  return method;
+}
+makeAjaxRequest('http://google.com/');
+makeAjaxRequest('http://google.com/','GET');
+
+output:
+GET,
+GET
+
+the above code we can mininfy by using default function arguments as below
+function makeAjaxRequest(url,method='GET'){
+     return method;
+}
+makeAjaxRequest('http://google.com/');
+makeAjaxRequest('http://google.com/',null);//does not assign method=get in above
+makeAjaxRequest('http://google.com/',undefined);
+makeAjaxRequest('http://google.com/','POST');
+
+output:
+GET
+GET
+POST
+
+
+
+
+
+example:2
+function addOffset(style={}) {
+  
+  
+  style.offset = '10px';
+  
+  return style;
+}
+addOffSet();
+
+
+
+Rest and Spread Operator
+
+function addNumbers(numbers){
+  return numbers.reduce((total,number)=>{
+       return total+=number;
+   },0);
+}
+addNumbers([1,2,3,4,5]);
+
+
+or
+
+
+function addNumbers(a,b,c,d,e){
+  var numbers=[a,b,c,d,e];
+  return numbers.reduce((total,number)=>{
+       return total+=number;
+   },0);
+}
+addNumbers(1,2,3,4,5);
+
+
+The above code we can use rest operator as
+
+function addNumbers(...numbers){ ...numbers will create any array
+  //var numbers=[a,b,c,d,e];
+  return numbers.reduce((total,number)=>{
+       return total+=number;
+   },0);
+}
+addNumbers(1,2,3,4,5);//any number of parameters we can pass
+
+
+example2:
+var defaultColors=['red','green'];
+var userFavoriteColors=['Orange','Yellow'];
+//defaultColors.concat(userFavoriteColors);
+['Blue','Maroon',defaultColors,userFavoriteColors];
+['Blue','Maroon',...defaultColors,...userFavoriteColors];
+
+output
+["Blue","Maroon",["red","green"],["Orange","Yellow"]]
+["Blue","Maroon","red","green","Orange","Yellow"]//spread operator dumps all [] inside array
+
+
+
+example3:
+
+function validateShoppingList(...items){
+  if(items.indexOf('milk')<0){
+     return ['milk',...items];
+  }
+  return items;
+}
+validateShoppingList('orange','bread','eggs');
+
+exapl4:
+const MathLibrary={
+  calculateProduct(...rest){
+    //return a*b;
+    this.multipy(...rest);
+  },
+  multiply(a,b){
+   return a*b;
+  }
+}
+
+
+
+
+example4:
+Refactor the following to use the spread operator.
+function join(array1, array2) {
+  return array1.concat(array2);
+}
+
+
+
+using spread operator:
+function join(array1, array2) {
+  return [...array1,...array2];
+}
+var a=[1,2];
+var b=[3,4];
+join(a,b);
+
+
+
+example5:
+Refactor the following to use the spread operator.
+function unshift(array, a, b, c, d, e) {
+  return [a, b, c, d, e].concat(array);
+}
+
+using spread below
+function unshift(array, a, b, c, d, e) {
+    var arr1=[a, b, c, d, e];
+    return [...array,...arr1];
+}
+unshift([1,3,4],1,2,3,4,5);
+
+output:
+[1,3,4,1,2,3,4,5]
+
+
+//corect answ
+function unshift(array, ...rest) {
+
+  return (rest).concat(array);
+}
+
+
+
+
+Destructing:
+
+var expense={
+  type:'Business',
+  amount:'$40'
+}
+//var type=expense.type;
+//var amount=expense.amount;
+
+//var {type}=expense;//declares a variable type and reference to expense
+//var {amount}=expense;//declares a variable amount and reference to expense
+
+var {type,amount,asfd}=expense;
+console.log(typeof asdf,type,amount);
+
+output;
+undefined.//property  does not exist in the object.
+Business
+$40
+
+
+we are pulling a property of expense object using above code and will assign to type,amount of exact same name;
+*)The name of  var {type,amount}=expense should be identical to the name in the object.
+
+
+
+
+
+Destructing arguments object
+
+example2:
+
+var savedFile={
+  name:'pic1',
+  extension:'jpg',
+  size:14040
+}
+
+/*function fileDetails(file){
+ return `${file.name}.${file.extension} and size is:${file.size}`;
+}
+*/
+
+function fileDetails({name,extension,size},{color}){
+ return `${name}.${extension} and size is:${size} and color is ${color}`;
+}
+//fileDetails(savedFile);
+fileDetails(savedFile,{color:'red'});
+
+output:
+pic1.jpg and size is:14040 and color is red
+
+
+
+note:
+If destructing of objects was all about pulling off of properties and 
+destructing of arrays is all about pulling off individual elements;
+
+
+
+
+Destructing Arrays:
+const companies=['Google','Facebook','Uber'];
+
+//const firstcompany=companies[0];
+
+const [name,name1,name3]=companies;
+name;
+name1;
+name3
+
+
+output:
+Google
+Facebook
+Uber
+
+
+
+
+example2: using spread operator destructuring arrays.
+const companies=['Google','Facebook','Uber','Microsoft','L & T'];
+const [name,name1,...rest]=companies;
+name;
+name1;
+rest
+
+output:
+Google
+Facebook
+["Uber","Microsoft","L & T"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Destructuring arrays and object at same time
+const companies=[
+  {name:'Google',location:'Mountain View'},
+  {name:'Facebook',locati
